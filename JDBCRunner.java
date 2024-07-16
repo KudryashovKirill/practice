@@ -244,7 +244,7 @@ public class JDBCRunner {
         PreparedStatement statement = connection.prepareStatement("DELETE from bosses WHERE boss_health >= 8;");
 
         int count = statement.executeUpdate(); // выполняем запрос на удаление и возвращаем количество измененных строк
-        System.out.println("DELETEd " + count + " items");
+        System.out.println("DELETEd " + count + " bosses");
         getBosses(connection);
     }
 }
