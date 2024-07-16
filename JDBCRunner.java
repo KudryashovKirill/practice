@@ -4,13 +4,12 @@ public class JDBCRunner {
 
     private static final String PROTOCOL = "jdbc:postgresql://";        // URL-prefix
     private static final String DRIVER = "org.postgresql.Driver";       // Driver name
-    private static final String URL_LOCALE_NAME = "localhost/";         // ваш компьютер + порт по умолчанию
-
-    private static final String DATABASE_NAME = "game_roguelike";          // FIXME имя базы
+    private static final String URL_LOCALE_NAME = "localhost/";        
+    private static final String DATABASE_NAME = "game_roguelike";         
 
     public static final String DATABASE_URL = PROTOCOL + URL_LOCALE_NAME + DATABASE_NAME;
-    public static final String USER_NAME = "postgres";                  // FIXME имя пользователя
-    public static final String DATABASE_PASS = "postgres";              // FIXME пароль базы данных
+    public static final String USER_NAME = "postgres";                  
+    public static final String DATABASE_PASS = "postgres";              
 
     public static void main(String[] args) {
 
@@ -43,6 +42,7 @@ public class JDBCRunner {
             removeCharactersWhereHealthTen(connection);
             System.out.println();
             correctCharacter(connection, "Каин", 3);
+            System.out.println();
             addCharacter(connection, 5, "Лазарь", 3, 9);
             System.out.println();
 
@@ -93,7 +93,7 @@ public class JDBCRunner {
             param3 = rs.getInt(columnName3);
             param2 = rs.getInt(columnName2); // значение ячейки, можно получить по имени; по умолчанию возвращается строка
             param1 = rs.getString(columnName1);
-            param0 = rs.getInt(columnName0);    // если точно уверены в типе данных ячейки, можно его сразу преобразовать
+            param0 = rs.getInt(columnName0);    
             System.out.println(param0 + " | " + param1 + " | " + param2 + " | " + param3 + " | " + param4);
         }
     }
@@ -110,7 +110,7 @@ public class JDBCRunner {
         ResultSet rs = statement.executeQuery("SELECT * FROM characters;");  // выполняем запроса на поиск и получаем список ответов
 
         while (rs.next()) {  // пока есть данные
-            param0 = rs.getInt(columnName0); // значение ячейки, можно также получить по порядковому номеру (начиная с 1)
+            param0 = rs.getInt(columnName0); 
             param1 = rs.getString(columnName1);
             param2 = rs.getInt(columnName2);
             param3 = rs.getInt(columnName3);
@@ -129,7 +129,7 @@ public class JDBCRunner {
         ResultSet rs = statement.executeQuery("SELECT * FROM items;");  // выполняем запроса на поиск и получаем список ответов
 
         while (rs.next()) {  // пока есть данные
-            param0 = rs.getInt(columnName0); // значение ячейки, можно также получить по порядковому номеру (начиная с 1)
+            param0 = rs.getInt(columnName0); 
             param1 = rs.getString(columnName1);
             param2 = rs.getInt(columnName2);
             param3 = rs.getString(columnName3);
@@ -144,7 +144,7 @@ public class JDBCRunner {
         PreparedStatement statement = connection.prepareStatement(
                 "SELECT boss_id, boss_name, boss_health, boss_damage, boss_floor " +
                         "FROM bosses " +
-                        "WHERE boss_floor >= 2 and boss_floor <= 3;");  // создаем оператор шаблонного-запроса с "включаемыми" параметрами - ?
+                        "WHERE boss_floor >= 2 and boss_floor <= 3;");  
         ResultSet rs = statement.executeQuery();// выполняем запроса на поиск и получаем список ответов
 
         while (rs.next()) {  // пока есть данные перебираем их и выводим
@@ -165,7 +165,7 @@ public class JDBCRunner {
         PreparedStatement statement = connection.prepareStatement(
                 "SELECT mob_id, mob_name, mob_damage, mob_health, mob_floor " +
                         "FROM mobs " +
-                        "WHERE mob_floor >= 2 and mob_floor <= 4;");  // создаем оператор шаблонного-запроса с "включаемыми" параметрами - ?
+                        "WHERE mob_floor >= 2 and mob_floor <= 4;");  
         ResultSet rs = statement.executeQuery();// выполняем запроса на поиск и получаем список ответов
 
         while (rs.next()) {  // пока есть данные перебираем их и выводим
@@ -180,7 +180,7 @@ public class JDBCRunner {
         PreparedStatement statement = connection.prepareStatement(
                 "SELECT character_id, character_name, character_damage, character_health " +
                         "FROM characters " +
-                        "WHERE character_damage = 2;");  // создаем оператор шаблонного-запроса с "включаемыми" параметрами - ?
+                        "WHERE character_damage = 2;");  
         ResultSet rs = statement.executeQuery();// выполняем запроса на поиск и получаем список ответов
 
         while (rs.next()) {  // пока есть данные перебираем их и выводим
@@ -199,8 +199,8 @@ public class JDBCRunner {
         PreparedStatement statement = connection.prepareStatement(
                 "INSERT INTO characters(character_id, character_name, character_damage, character_health) VALUES (?, ?, ?, ?) returning character_id;", Statement.RETURN_GENERATED_KEYS);    // создаем оператор шаблонного-запроса с "включаемыми" параметрами - ?
         statement.setInt(1, character_id);
-        statement.setString(2, name);    // "безопасное" добавление имени
-        statement.setInt(3, damage);  // "безопасное" добавление количества глаз
+        statement.setString(2, name);  
+        statement.setInt(3, damage);  
         statement.setInt(4, health);
 
         int count =
